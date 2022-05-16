@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <download_center>
+            <general>
+                <archive_path>archives</archive_path>
+                <archive_force_recreate>0</archive_force_recreate>
+                <log_file>var/log/asset_downloads.log</log_file>
+                <log_level>info</log_level>
+            </general>
+            <logging>
+                <log_file>var/log/asset_downloads.log</log_file>
+                <log_level>info</log_level>
+            </logging>
+        </download_center>
+    </default>
+</config>

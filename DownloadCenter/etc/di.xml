@@ -1,0 +1,67 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <!-- To keep Magento happy, we need a default implementation for the Interface -->
+    <preference for="OracDecor\DownloadCenter\Api\DownloadManagerInterface" type="OracDecor\DownloadCenter\Service\AssetDownloadManager"/>
+
+    <type name="OracDecor\DownloadCenter\Service\ArchiveManager">
+        <arguments>
+            <argument name="logger" xsi:type="object">download_center_logger</argument>
+        </arguments>
+    </type>
+    <type name="OracDecor\DownloadCenter\Controller\Download\Asset">
+        <arguments>
+            <argument name="logger" xsi:type="object">download_center_logger</argument>
+        </arguments>
+    </type>
+    <type name="OracDecor\DownloadCenter\Controller\Download\File">
+        <arguments>
+            <argument name="logger" xsi:type="object">download_center_logger</argument>
+        </arguments>
+    </type>
+    <type name="OracDecor\DownloadCenter\Controller\Download\Files">
+        <arguments>
+            <argument name="logger" xsi:type="object">download_center_logger</argument>
+        </arguments>
+    </type>
+    <type name="OracDecor\DownloadCenter\Controller\Download\Group">
+        <arguments>
+            <argument name="logger" xsi:type="object">download_center_logger</argument>
+        </arguments>
+    </type>
+    <type name="OracDecor\DownloadCenter\Controller\Download\Asset">
+        <arguments>
+            <argument name="downloadManager" xsi:type="object">OracDecor\DownloadCenter\Service\AssetDownloadManager</argument>
+        </arguments>
+    </type>
+    <type name="OracDecor\DownloadCenter\Controller\Download\File">
+        <arguments>
+            <argument name="downloadManager" xsi:type="object">OracDecor\DownloadCenter\Service\FileDownloadManager</argument>
+        </arguments>
+    </type>
+    <type name="OracDecor\DownloadCenter\Controller\Download\Files">
+        <arguments>
+            <argument name="downloadManager" xsi:type="object">OracDecor\DownloadCenter\Service\FilesDownloadManager</argument>
+        </arguments>
+    </type>
+    <type name="OracDecor\DownloadCenter\Controller\Download\Group">
+        <arguments>
+            <argument name="downloadManager" xsi:type="object">OracDecor\DownloadCenter\Service\GroupDownloadManager</argument>
+        </arguments>
+    </type>
+
+    <virtualType name="download_center_logger_handler" type="OracDecor\Base\Logger\Handler">
+        <arguments>
+            <argument name="fileConfigKey" xsi:type="string">download_center/logging/log_file</argument>
+            <argument name="logLevelConfigKey" xsi:type="string">download_center/logging/log_level</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="download_center_logger" type="Monolog\Logger">
+        <arguments>
+            <argument name="name" xsi:type="string">download-center-logger</argument>
+            <argument name="handlers" xsi:type="array">
+                <item name="stream" xsi:type="object">download_center_logger_handler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+</config>

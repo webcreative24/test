@@ -1,0 +1,102 @@
+<?php
+/**
+ * @var \OracDecor\DownloadCenter\Block\Widget\Grid $block
+ */
+?>
+
+<div class="download-widget">
+    <div class="message error error-message" style="display: none;"></div>
+    <div class="container">
+        <div class="global-buttons">
+            <button class="btn-secondary" id="download-widget-select"><?= __('Download all...') ?></button>
+            <div class="dropdown-buttons hidden">
+                <div class="button-spacer"></div>
+                <?php foreach($block->getAvailableFiles() as $fileField => $fileDescription) : ?>
+                    <button class="btn-secondary"
+                            data-file="<?= $fileField ?>">
+                        <?= __('Select all %1', $fileDescription); ?>
+                    </button>
+                <?php endforeach; ?>
+                <button class="btn-secondary" data-file="none"><?= __('Deselect all'); ?></button>
+            </div>
+            <button class="btn-secondary throbber"
+                    id="download-widget-download-selection"
+                    data-endpoint="<?= $block->getDownloadSelection() ?>">
+                <?= __('Download selection'); ?>
+                <div class="ld"></div>
+            </button>
+        </div>
+
+        <div class="row">
+            <?php
+            $oldCategory1 = $oldCategory2 = 'root';
+            $hiddenClass = '';
+            $category1 = '';
+            $category2 = '';
+            /** @var \OracDecor\Assets\Api\Data\AssetInterface $asset */
+            ?>
+            <?php foreach ($block->getAssets() as $asset): ?>
+                <?php if ($oldCategory1 != $asset->getCategory1()): ?>
+                    <?php if ($asset->getCategory1()): ?>
+                        <?php $hiddenClass = ' hidden'; ?>
+                        <?php $category1 = $asset->getCategory1(); ?>
+                        <?php $category2 = '' ?>
+                        <div class="col-12 category1" <?= ($category1 ?  'data-category1="' . $block->normalizeCategory($category1) . '"' : ''); ?>>
+                            <h3><?= $block->resolveCategory1($category1); ?></h3>
+                        </div>
+                    <?php endif; ?>
+                    <?php $oldCategory1 = $category1; ?>
+                <?php endif; ?>
+
+                <?php if ($oldCategory2 != $asset->getCategory2()): ?>
+                    <?php if ($asset->getCategory2()): ?>
+                        <?php $category2 = $asset->getCategory2() ?>
+                        <div class="col-12 category2<?= $hiddenClass ?>"
+                             <?= ($category1 ?  'data-category1="' . $block->normalizeCategory($category1) . '"' : ''); ?>
+                             <?= ($category2 ?  'data-category2="' . $block->normalizeCategory($category2) . '"' : ''); ?>>
+                            <h4><?= $block->resolveCategory2($category2); ?></h4>
+                        </div>
+                    <?php endif; ?>
+                    <?php $oldCategory2 = $category2 ?>
+                <?php endif; ?>
+
+                <div class="col-12 col-lg-3 col-md-4 col-sm-6 asset-wrapper<?= $hiddenClass ?>"
+                     <?= ($category1 ?  'data-category1="' . $block->normalizeCategory($category1) . '"' : ''); ?>
+                     <?= ($category2 ?  'data-category2="' . $block->normalizeCategory($category2) . '"' : ''); ?>>
+                    <div class="asset" id="asset-<?= $asset->getAssetId() ?>">
+                        <img src="<?= $block->getThumbnailPlaceholderPath(); ?>"
+                             data-src="<?= $block->getThumbnailPath($asset); ?>"
+                             class="lazy"
+                             alt="<?= $block->getTitle(); ?>"/>
+                        <div class="asset-title">
+                            <?php if ($block->isAssetDownloadIndividuallyEnabled()): ?>
+                                <a rel="nofollow" href="<?= $block->getDownloadAsset($asset) ?>"><?= $asset->getName(); ?></a>
+                            <?php else: ?>
+                                <?= $asset->getName(); ?>
+                            <?php endif; ?>
+                        </div>
+                        <?php foreach ($block->getDownloadFiles($asset) as $fileInfo): ?>
+                            <div class="asset-files">
+                                <?php
+                                $id = $asset->getAssetId();
+                                $file = $fileInfo['file_field'];
+                                ?>
+
+                                <input type="checkbox"
+                                       id="<?= $id . $file ?>"
+                                       data-asset-reference="<?= $asset->getReference(); ?>"
+                                       data-asset-file="<?= $file; ?>">
+                                <label for="<?= $id . $file ?>">
+                                    <a rel="nofollow" href="<?= $fileInfo['url']; ?>"><?= $asset->getReference() . '.' . $fileInfo['file_extension']; ?></a>
+                                </label>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    require(['download-widget'], function() {});
+</script>

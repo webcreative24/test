@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Widget:etc/widget.xsd">
+    <widget id="widget_download_center_grid" class="OracDecor\DownloadCenter\Block\Widget\Grid"
+            placeholder_image="OracDecor_DownloadCenter::images/widget_download_center_grid.png">
+        <label translate="true">Download Center Grid</label>
+        <description translate="true">Download assets</description>
+        <parameters>
+            <parameter name="asset_group_reference" xsi:type="text" visible="true" required="true" sort_order="20">
+                <label translate="true">Group Reference</label>
+                <description translate="true">Enter a group reference code.</description>
+            </parameter>
+            <parameter name="asset_references" xsi:type="text" visible="true" sort_order="30">
+                <label translate="true">Asset References</label>
+                <description translate="true">Enter comma separated asset reference codes. Note: only assets of the related group will be visible.</description>
+            </parameter>
+            <parameter name="exclude_category_ids" xsi:type="text" visible="true" sort_order="40">
+                <label translate="true">Exclude category IDs</label>
+                <description translate="true">Enter comma separated category IDs. These categories will be excluded in the download widget.</description>
+            </parameter>
+            <parameter name="show_file_1" xsi:type="select" source_model="Magento\Config\Model\Config\Source\Yesno" visible="true" sort_order="51">
+                <label translate="true">Show file 1</label>
+            </parameter>
+            <parameter name="show_file_2" xsi:type="select" source_model="Magento\Config\Model\Config\Source\Yesno" visible="true" sort_order="52">
+                <label translate="true">Show file 2</label>
+            </parameter>
+            <parameter name="show_file_3" xsi:type="select" source_model="Magento\Config\Model\Config\Source\Yesno" visible="true" sort_order="53">
+                <label translate="true">Show file 3</label>
+            </parameter>
+            <parameter name="show_file_4" xsi:type="select" source_model="Magento\Config\Model\Config\Source\Yesno" visible="true" sort_order="54">
+                <label translate="true">Show file 4</label>
+            </parameter>
+            <parameter name="show_file_5" xsi:type="select" source_model="Magento\Config\Model\Config\Source\Yesno" visible="true" sort_order="55">
+                <label translate="true">Show file 5</label>
+            </parameter>
+            <parameter name="enable_asset_download_individually" xsi:type="select" source_model="Magento\Config\Model\Config\Source\Yesno" visible="true" sort_order="60">
+                <label translate="true">Enable asset download</label>
+                <description translate="true">Enable or disable asset download (individually) as zip. The zip contains all available files of the related asset.</description>
+            </parameter>
+        </parameters>
+    </widget>
+</widgets>
